@@ -32,6 +32,10 @@ def checkObjectType(release):
     else:
         return None
 def extractTags(release, tag_attributes):
+    def numberOfRecords(tracklist):
+        tracks = {track.position[0] for track in tracklist}
+        return len(tracks)
+    
     '''
     Items in tag_attributes do not support list indexing, or sub-attributes
     '''
@@ -41,34 +45,18 @@ def extractTags(release, tag_attributes):
         item_in_dict = {attr: getattr(release, attr)}
         tags.update(item_in_dict)
 
-        if attr in ['artists', 'labels']:
-            tags[attr] = tags[attr][0].name
-        elif attr in ['images']:
-            tags[attr] = tags[attr][0]['resource_url']            
-       
-        match tags[attr]:
-            case int():
-                tags[attr] = str(tags[attr])
-                tags[attr] = tags[attr].upper()
-            case list():
+        match attr:
+            case ('artists' | 'labels'):
+                tags[attr] = tags[attr][0].name.upper()
+            case 'images':
+                tags[attr] = tags[attr][0]['resource_url']
+            case 'genres':
                 tags[attr] = [tag.upper() for tag in tags[attr]]
                 tags[attr] = str(tags[attr])
+            case 'tracklist':
+                tags[attr] = numberOfRecords(tags[attr])
             case _:
-                tags[attr] = tags[attr].upper()
-
-        '''
-        # Solution for python<3.10
-
-        if isinstance(tags[attr], int):
-            tags[attr] = str(tags[attr])
-
-        if tag_attributes[attr] == 'genres':
-            tags[attr] = [tag.upper() for tag in tags[attr]]
-            tags[attr] = str(tags[attr])
-        else:
-            tags[attr] = tags[attr].upper()
-        '''
-
+               tags[attr] = str(tags[attr]).upper()
     return tags
 '''def downloadImg(image_url, filename): # Toma una url y descarga la imagen. Devuelve bool si fue exitoso.
     filename = str(filename) + '.' + image_url.split(".")[-1]
@@ -94,6 +82,6 @@ def valueOfShopifyProperty(tags_row, shopify_key):
         return req_tags, req_function
 
     req_tags, req_function = reqTags(shopify_key)
-    shopify_prop = req_function(tags_row[tag] for tag in req_tags) ## No pasar más de un argumento, ojo con tags_row[i] = <tuple>
-
+    args = (tags_row[tag] for tag in req_tags)
+    shopify_prop = req_function(*args) 
     return shopify_prop 
