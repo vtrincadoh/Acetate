@@ -16,7 +16,7 @@ SHOPIFY_DICT = {
      'func': lambda:""},
  'Published': {
      'args': (), 
-     'func': lambda :True},
+     'func': lambda :'TRUE'},
  'Option1 Name': {
      'args': (), 
      'func': lambda:""},
@@ -49,10 +49,10 @@ SHOPIFY_DICT = {
      'func': lambda x:x},
  'Variant Inventory Policy': {
      'args': (), 
-     'func': lambda:""},
+     'func': lambda:"deny"},
  'Variant Fulfillment Service': {
      'args': (), 
-     'func': lambda:""},
+     'func': lambda:"manual"},
  'Variant Price': {
      'args': ('price', ), 
      'func': lambda x:x},
@@ -61,13 +61,13 @@ SHOPIFY_DICT = {
      'func': lambda:""},
  'Variant Requires Shipping': {
      'args': (), 
-     'func': lambda:""},
+     'func': lambda:"TRUE"},
  'Variant Taxable': {
      'args': (), 
-     'func': lambda:""},
+     'func': lambda:"TRUE"},
  'Variant Barcode': {
      'args': ('barcode', ), ### FIXED TO N&R
-     'func': lambda b: str(ord('N'))+b},
+     'func': lambda b: b},
  'Image Src': {
      'args': ('images', ), 
      'func': lambda x:x},
@@ -79,7 +79,7 @@ SHOPIFY_DICT = {
      'func': lambda:""},
  'Gift Card': {
      'args': (), 
-     'func': lambda:""},
+     'func': lambda:"FALSE"},
  'SEO Title': {
      'args': (), 
      'func': lambda:""},
@@ -130,7 +130,7 @@ SHOPIFY_DICT = {
      'func': lambda:""},
  'Variant Weight Unit': {
      'args': (), 
-     'func': lambda:""},
+     'func': lambda:"g"},
  'Variant Tax Code': {
      'args': (), 
      'func': lambda:""},
@@ -139,13 +139,13 @@ SHOPIFY_DICT = {
      'func': lambda:""},
  'Status': {
      'args': (), 
-     'func': lambda:""},
+     'func': lambda:"active"},
  'Standard Product Type': {
      'args': (), 
      'func': lambda:""},
  'Custom Product Type': {
      'args': (), 
-     'func': lambda:""}
+     'func': lambda:'Nuevos & Reediciones'}
  }
 
 TAG_ATTRIBUTES = ['artists', 'title', 'labels', 'genres', 'year', 'country', 'images', 'tracklist']

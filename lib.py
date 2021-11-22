@@ -1,4 +1,5 @@
 import discogs_client
+from discogs_client import models
 import openpyxl
 #from requests import get
 #from shutil import copyfileobj
@@ -22,15 +23,21 @@ def unpackIterRow(ws):
     iterable = ws.iter_rows(min_row=2, max_row=last_row, values_only=True)
     return iterable
 def searchByProperty(data, property): #property es string, chequear valores de discogs_client
+    def improvedMatch(releases):
+        individual_release = next(releases, None)
+        match individual_release:
+            case None:
+                return None
+            case discogs_client.models.Release():
+                return individual_release
+            case discogs_client.models.Master():
+                return individual_release.main_release
+            case _:
+                releases.remove(individual_release)
+                return improvedMatch(releases)
+    
     releases = discogs.search(str(data), type=property)
-    return releases[0]
-def checkObjectType(release):
-    if isinstance(release, discogs_client.models.Release):
-        return release
-    elif isinstance(release, discogs_client.models.Master):
-        return release.main_release
-    else:
-        return None
+    return improvedMatch(iter(releases))
 def extractTags(release, tag_attributes):
     def numberOfRecords(tracklist):
         tracks = {track.position[0] for track in tracklist}

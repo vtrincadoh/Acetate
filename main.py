@@ -3,7 +3,7 @@ import csv
 from const import TAG_ATTRIBUTES
 from datetime import datetime
 
-csv_output = open('csv_shopify.csv', 'w')
+csv_output = open('csv_shopify.csv', 'w', newline='')
 csv_writer = csv.DictWriter(csv_output, SHOPIFY_DICT.keys())
 
 csv_input_filename = input('Drag input CSV:')
