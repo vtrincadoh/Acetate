@@ -12,8 +12,8 @@ SHOPIFY_DICT = {
      'args': ('labels', ), 
      'func': lambda x:x},
  'Tags': {
-     'args': (), ### Ver en más detalle
-     'func': lambda:""},
+     'args': ('genres', ), ### Ver en más detalle
+     'func': lambda x:x},
  'Published': {
      'args': (), 
      'func': lambda :'TRUE'},

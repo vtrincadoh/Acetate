@@ -4,6 +4,7 @@ from lib import * #} pylint: disable=unused-import
 import csv
 from const import TAG_ATTRIBUTES
 from datetime import datetime
+from re import sub
 
 logging.basicConfig(filename='output.log',
                     format='%(asctime)s %(message)s',
@@ -37,8 +38,17 @@ for row in csv_reader:
 
     for key in SHOPIFY_DICT.keys():
         shopify_row.update({key: valueOfShopifyProperty(tags, key)})
-    
-    csv_writer.writerow(shopify_row)
+
+    try:
+        csv_writer.writerow(shopify_row)
+    except UnicodeEncodeError:
+        def replaceSpecialChars(data):
+            if not isinstance(data, str):
+                return data
+            
+            return sub('[^A-Za-z0-9]+', '', data)
+        shopify_row = {key: replaceSpecialChars(value) for key, value in shopify_row.items()}
+        csv_writer.writerow(shopify_row)
     release_ok = '{0} - {1} // OK'.format(tags['artists'], tags['title'])
     logger.info(release_ok)
     print(release_ok)

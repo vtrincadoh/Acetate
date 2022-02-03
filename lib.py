@@ -47,8 +47,7 @@ def extractTags(release, tag_attributes):
             case 'images':
                 tags[attr] = tags[attr][0]['resource_url']
             case 'genres':
-                tags[attr] = [tag.upper() for tag in tags[attr]]
-                tags[attr] = str(tags[attr])
+                tags[attr] = ','.join([tag.upper() for tag in tags[attr]])
             case 'tracklist':
                 tags[attr] = numberOfRecords(tags[attr])
             case _:
