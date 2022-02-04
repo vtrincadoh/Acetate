@@ -6,17 +6,20 @@ from const import TAG_ATTRIBUTES
 from datetime import datetime
 from re import sub
 
-logging.basicConfig(filename='output.log',
+
+
+base_filename = input('Drag input CSV:')
+start_time = datetime.now()
+base_filename = cleanFilename(base_filename)
+
+logging.basicConfig(filename=base_filename+'.log',
                     format='%(asctime)s %(message)s',
                     filemode='w')
         
-csv_output = open('csv_shopify.csv', 'w', newline='')
+csv_output = open(base_filename+'_OUTPUT.csv', 'w', newline='')
 csv_writer = csv.DictWriter(csv_output, SHOPIFY_DICT.keys())
 
-csv_input_filename = input('Drag input CSV:')
-start_time = datetime.now()
-csv_input_filename = cleanFilename(csv_input_filename)
-csv_input = open(csv_input_filename, 'r', encoding= 'utf-8-sig')
+csv_input = open(base_filename + '.csv', 'r', encoding= 'utf-8-sig')
 csv_reader = csv.DictReader(csv_input)
 
 logger = logging.getLogger()
