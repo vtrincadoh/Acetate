@@ -53,7 +53,7 @@ for row in csv_reader:
         shopify_row = {key: replaceSpecialChars(value) for key, value in shopify_row.items()}
         csv_writer.writerow(shopify_row)
     release_ok = '{0} - {1} // OK'.format(tags['artists'], tags['title'])
-    logger.info(release_ok)
+    #logger.info(release_ok)
     print(release_ok)
 
 csv_input.close()
