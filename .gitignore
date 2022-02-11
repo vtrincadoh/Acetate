@@ -121,3 +121,6 @@ dmypy.json
 
 # Extras
 /assets
+/input
+/output
+/log
