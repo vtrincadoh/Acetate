@@ -118,3 +118,6 @@ dmypy.json
 # Working files
 *.csv
 *.xlsx
+
+# Extras
+/assets
