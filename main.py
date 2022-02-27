@@ -1,4 +1,5 @@
 import logging
+import argparse
 
 from lib import * #} pylint: disable=unused-import
 import csv
@@ -16,7 +17,7 @@ logging.basicConfig(filename=base_filename+'.log',
                     format='%(asctime)s %(message)s',
                     filemode='w')
         
-csv_output = open(base_filename+'_OUTPUT.csv', 'w', newline='')
+csv_output = open('SHOPIFY_'+base_filename+'.csv', 'w', newline='')
 csv_writer = csv.DictWriter(csv_output, SHOPIFY_DICT.keys())
 
 csv_input = open(base_filename + '.csv', 'r', encoding= 'utf-8-sig')
