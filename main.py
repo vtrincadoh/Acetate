@@ -6,7 +6,7 @@ from const import TAG_ATTRIBUTES
 from datetime import datetime
 from re import sub
 
-
+csv.register_dialect('semicolon', delimiter=';', quoting=csv.QUOTE_NONE)
 
 base_filename = input('Drag input CSV:')
 start_time = datetime.now()
@@ -20,7 +20,7 @@ csv_output = open(base_filename+'_OUTPUT.csv', 'w', newline='')
 csv_writer = csv.DictWriter(csv_output, SHOPIFY_DICT.keys())
 
 csv_input = open(base_filename + '.csv', 'r', encoding= 'utf-8-sig')
-csv_reader = csv.DictReader(csv_input)
+csv_reader = csv.DictReader(csv_input, dialect='semicolon')
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
