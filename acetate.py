@@ -13,18 +13,19 @@ csv.register_dialect('semicolon', delimiter=';', quoting=csv.QUOTE_NONE)
 base_filename = sys.argv[1]
 
 if not os.path.isfile(base_filename):
-    print("Path does not exist")
+    print("File does not exist")
     input()
     sys.exit()
 
+base_filename = base_filename.split('.')[0]
+
 start_time = datetime.now()
-base_filename = cleanFilename(base_filename)
 
 logging.basicConfig(filename=base_filename+'.log',
                     format='%(asctime)s %(message)s',
                     filemode='w')
         
-csv_output = open('SHOPIFY_'+base_filename+'.csv', 'w', newline='')
+csv_output = open(base_filename+'_SHOPIFY.csv', 'w', newline='')
 csv_writer = csv.DictWriter(csv_output, SHOPIFY_DICT.keys())
 
 csv_input = open(base_filename + '.csv', 'r', encoding= 'utf-8-sig')
@@ -61,7 +62,7 @@ for row in csv_reader:
         shopify_row = {key: replaceSpecialChars(value) for key, value in shopify_row.items()}
         csv_writer.writerow(shopify_row)
     release_ok = '{0} - {1} // OK'.format(tags['artists'], tags['title'])
-    #logger.info(release_ok)
+    logger.info(release_ok)
     print(release_ok)
 
 csv_input.close()

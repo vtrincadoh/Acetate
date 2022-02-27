@@ -4,10 +4,7 @@ from const import SHOPIFY_DICT
 
 discogs = discogs_client.Client('AltoqueInv/0.1', user_token='NYklFhDVlpWgnjwsXzkyvADMuqNKpDqbdPuxlPhN')
 
-def cleanFilename(filename):
-    split_filename = filename.split('\'')
-    filename = split_filename[-2].split('.')[0] if len(split_filename)>1 else filename.split('.')[0]
-    return filename
+
 def searchByProperty(data, property): #property es string, chequear valores de discogs_client
     def improvedMatch(releases):
         individual_release = next(releases, None)
