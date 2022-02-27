@@ -1,5 +1,6 @@
 import logging
-import argparse
+import sys
+import os
 
 from lib import * #} pylint: disable=unused-import
 import csv
@@ -9,7 +10,13 @@ from re import sub
 
 csv.register_dialect('semicolon', delimiter=';', quoting=csv.QUOTE_NONE)
 
-base_filename = input('Drag input CSV:')
+base_filename = sys.argv[1]
+
+if not os.path.isfile(base_filename):
+    print("Path does not exist")
+    input()
+    sys.exit()
+
 start_time = datetime.now()
 base_filename = cleanFilename(base_filename)
 
